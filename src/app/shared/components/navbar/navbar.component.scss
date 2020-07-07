@@ -1,20 +1,37 @@
+.header {
+  background-color: rgb(240, 240, 240);
+  height: 100px;
+}
+
 .nav-container {
-  border-bottom: 1px solid black;
+  display: flex;
+  align-items: center;
+
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+nav {
+  margin-left: 20px;
+  flex-grow: 1;
 }
 
 .nav-links {
   display: flex;
   justify-content: space-between;
+
   font-family: 'Lato', sans-serif;
   list-style: none;
-  flex: 90;
 }
 
-nav {
-  display: flex;
-  justify-content: center;
+.nav-links li a {
+  text-decoration: none;
+  color: #333391;
+  letter-spacing: 2px;
 }
 
-h1 {
-  flex: 10;
+.logo {
+  width: 100px;
+  height: 100px;
 }
