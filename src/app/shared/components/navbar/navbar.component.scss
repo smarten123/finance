@@ -14,12 +14,10 @@
 
 nav {
   margin-left: 20px;
-  flex-grow: 1;
 }
 
 .nav-links {
   display: flex;
-  justify-content: space-between;
 
   font-family: 'Lato', sans-serif;
   list-style: none;
@@ -29,9 +27,35 @@ nav {
   text-decoration: none;
   color: #333391;
   letter-spacing: 2px;
+
+  margin-left: 14px;
+  margin-right: 14px;
 }
 
 .logo {
   width: 100px;
   height: 100px;
+}
+
+.secondary-nav {
+  display: flex;
+  flex-grow: 1;
+  justify-content: flex-end;
+}
+
+.btn-login {
+  background-color: rgba(0, 153, 204, 100%);
+  color: #fff;
+  outline: none;
+
+  border: 1px solid #0099CC;
+  border-radius: 4px;
+  height: 48px;
+  width: 120px;
+}
+
+.btn-login:hover {
+  transition: background-color 0.2s;
+
+  background-color: rgba(0, 153, 204, 50%);
 }
