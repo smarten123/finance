@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 
 namespace Finance.Web
 {
@@ -25,6 +26,8 @@ namespace Finance.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCustomSwagger();
+
             services.AddControllers();
         }
 
@@ -36,6 +39,13 @@ namespace Finance.Web
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseSwagger();
+
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Finance Web API v1");
+            });
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -46,6 +56,23 @@ namespace Finance.Web
             {
                 endpoints.MapControllers();
             });
+        }
+    }
+
+    internal static class ServiceCollectionExtensions
+    {
+        public static IServiceCollection AddCustomSwagger(this IServiceCollection services)
+        {
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Finance",
+                    Version = "v1"
+                });
+            });
+
+            return services;
         }
     }
 }
