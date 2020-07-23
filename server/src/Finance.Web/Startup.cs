@@ -1,23 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Finance.Application.Auth;
-using Finance.Infrastructure.Identity;
+using Finance.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
+using Finance.Application;
 
 namespace Finance.Web
 {
@@ -35,7 +26,9 @@ namespace Finance.Web
         {
             services.AddCustomSwagger();
 
-            services.AddCustomIdentity(Configuration)
+            services
+                .AddInfrastructureServices(Configuration)
+                .AddApplicationServices()
                 .AddCustomAuthentication(Configuration);
 
             services.AddControllers();
@@ -81,30 +74,6 @@ namespace Finance.Web
                     Version = "v1"
                 });
             });
-
-            return services;
-        }
-
-        public static IServiceCollection AddCustomIdentity(this IServiceCollection services,
-            IConfiguration configuration)
-        {
-            services.Configure<TokenProviderOptions>(options =>
-            {
-                options.Audience = configuration.GetValue<string>("Token:Audience");
-                options.Issuer = configuration.GetValue<string>("Token:Issuer");
-                options.ExpiresAt = TimeSpan.FromSeconds(300);
-
-                var secret = configuration.GetValue<string>("Token:Secret");
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
-                options.SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            });
-
-            services.AddDbContext<FinanceIdentityDbContext>(options =>
-                options.UseNpgsql(configuration.GetConnectionString("Identity")));
-
-            services.AddIdentityCore<IdentityUser>()
-                .AddEntityFrameworkStores<FinanceIdentityDbContext>()
-                .AddSignInManager<SignInManager<IdentityUser>>();
 
             return services;
         }
