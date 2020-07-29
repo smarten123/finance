@@ -32,7 +32,7 @@ namespace Finance.Web.Controllers
 
             if (result.Result.Succeeded)
             {
-                return Ok();
+                return NoContent();
             }
 
             foreach (var error in result.Result.Errors)
