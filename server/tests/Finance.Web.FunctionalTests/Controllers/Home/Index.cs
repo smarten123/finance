@@ -9,11 +9,11 @@ using Xunit;
 
 namespace Finance.Web.FunctionalTests.Controllers.Home
 {
-    public class Index : IClassFixture<CustomWebApplicationFactoryFixture>
+    public class Index : IClassFixture<CustomWebApplicationFactory>
     {
         private readonly HttpClient _httpClient;
 
-        public Index(CustomWebApplicationFactoryFixture factory)
+        public Index(CustomWebApplicationFactory factory)
         {
             _httpClient = factory.CreateClient();
         }

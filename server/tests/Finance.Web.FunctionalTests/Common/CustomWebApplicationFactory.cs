@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
+using Finance.Application.Common.Interfaces;
 using Finance.Infrastructure.Identity;
+using Finance.Web.FunctionalTests.Common;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Data.Sqlite;
@@ -9,12 +11,12 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Finance.Web.FunctionalTests
 {
-    public class CustomWebApplicationFactoryFixture : WebApplicationFactory<Startup>
+    public class CustomWebApplicationFactory : WebApplicationFactory<Startup>
     {
         private bool _disposed;
         private readonly SqliteConnection _sqliteConn;
 
-        public CustomWebApplicationFactoryFixture()
+        public CustomWebApplicationFactory()
         {
             _disposed = false;
             
@@ -46,6 +48,9 @@ namespace Finance.Web.FunctionalTests
 
                     context.Database.EnsureCreated();
                 }
+
+                var userManager = sp.GetRequiredService<IUserManager>();
+                DataSeeding.SeedUserAccounts(userManager);
             });
         }
 
