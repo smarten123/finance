@@ -1,0 +1,17 @@
+{
+  "stryker-config":
+  {
+      "test-runner": "vstest",
+      "reporters": [
+          "dots",
+          "cleartext"
+      ],
+      "threshold-high": 80,
+      "threshold-low": 70,
+      "threshold-break": 60,
+      "log-level": "info",
+      "test-projects": [
+        "tests/Finance.Application.UnitTests"
+      ]
+  }
+}

@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CEAEBCDF-91C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C385F0FA-9FA4-47D5-ACD6-3978D5D3C54D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Finance.Web.FunctionalTests", "tests\Finance.Web.FunctionalTests\Finance.Web.FunctionalTests.csproj", "{2B0E299B-E7A0-4EC3-9859-2EC28838B559}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Finance.Web.IntegrationTests", "tests\Finance.Web.IntegrationTests\Finance.Web.IntegrationTests.csproj", "{2B0E299B-E7A0-4EC3-9859-2EC28838B559}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Finance.Application", "src\Finance.Application\Finance.Application.csproj", "{C9D48079-21C3-4377-B456-F6DFF5B15A65}"
 EndProject

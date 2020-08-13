@@ -1,0 +1,6 @@
+.vs/
+.vscode/
+**/*.user
+**/StrykerOutput/
+**/obj/
+**/bin/

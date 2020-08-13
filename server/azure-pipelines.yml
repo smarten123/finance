@@ -1,0 +1,46 @@
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  workingDirectory: server/
+  unitTestProjects: server/tests/**/*.UnitTests.csproj
+  pathToSolution: server/Finance.sln
+
+steps:
+  - task: UseDotNet@2
+    displayName: Set .NET SDK version
+    inputs:
+      packageType: 'sdk'
+      version: '3.1.302'
+  - task: DotNetCoreCLI@2
+    displayName: Build solution
+    inputs:
+      command: 'build'
+      projects: $(pathToSolution)
+      arguments: '--configuration Release'
+  - task: DotNetCoreCLI@2
+    displayName: Run unit tests
+    inputs:
+      command: 'test'
+      projects: '$(unitTestProjects)'
+      arguments: '--configuration Release'
+      publishTestResults: false
+  - task: DotNetCoreCLI@2
+    displayName: Install Stryker.NET
+    inputs:
+      command: 'custom'
+      custom: 'tool'
+      arguments: 'install -g dotnet-stryker'
+  - task: DotNetCoreCLI@2
+    displayName: Run mutation tests with Stryker.NET
+    inputs:
+      command: 'custom'
+      custom: 'stryker'
+      workingDirectory: '$(workingDirectory)'
+  - task: Docker@2
+    condition: eq(variables['build.sourcebranch'], 'refs/heads/master')
+    inputs:
+      containerRegistry: 'default_registry'
+      repository: 'stanmartens/finance-be'
+      command: 'buildAndPush'
+      Dockerfile: 'server/Dockerfile'
